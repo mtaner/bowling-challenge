@@ -3,39 +3,62 @@
 // when spares - it will add the next point on top +10
 // when spare/strike in last frame, they can roll for bonus
 describe('BowlingScore', function() {
-	var bowlingScore;
+	var game;
 	beforeEach(function(){
-		bowlingScore = new BowlingScore();
+		game = new Bowling();
 	});
 
-	describe('numberOfPins', function(){
+	describe('#numberOfPins', function(){
 		it('understands the number user feeds in for pins knocked', function(){
-			expect(bowlingScore.numberOfPins(5)).toEqual(5);
+			expect(game.numberOfPins(5)).toEqual(5);
 		});
 
 	});
 
-	describe('numberKeeper', function(){
+	describe('#numberKeeper', function(){
 		it('stores the number of pins knocked in an array ', function(){
-			bowlingScore.numberOfPins(5);
-			bowlingScore.numberKeeper();
-			bowlingScore.numberOfPins(4);
-			expect(bowlingScore.numberKeeper()).toEqual([5, 4])
+			game.numberOfPins(5);
+			game.numberKeeper();
+			game.numberOfPins(4);
+			expect(game.numberKeeper()).toEqual([5, 4])
 		});
 
 	});
 
+	describe('#setScoreCalculator', function(){
+		it('calculates the score of a set', function(){
+			game.set_pins = [4,5]
+			expect(game.setScoreCalculator()).toEqual(9)
+		});
 
-	
 
+	});
 
-	// describe('#normalScore', function(){
-	// 	it('calculates the score outside of strike and spare', function(){
-	//
-	//
-	// 	});
-	//
-	// });
+	describe('#setScoreStrike', function() {
+		it('if the first game is a strike, it waits the result of the next set to calculate the total', function(){
+			game.set_pins = [10]
+			expect(game.setScoreCalculator()).toEqual(undefined)
+		});	
+	});
+
+	describe('#resetSetScore', function(){
+		it('deletes the set_pins array after it is passed to the calculator', function() {
+			game.set_pins = [4,5];
+			game.resetSetScore();
+			expect(game.set_pins).toEqual([]);
+
+		});
+
+	});
+
+	describe('#scoreKeeper', function(){
+		it('keeps the score of each set', function() {
+			game.set_pins = [4,5];
+			game.setScoreCalculator();
+			expect(game.scoreKeeper()).toEqual([9]);
+		});
+
+	});
 
 
 
