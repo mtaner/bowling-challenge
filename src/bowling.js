@@ -6,6 +6,10 @@ function Bowling() {
 Bowling.prototype = {
 	numberOfPins: function(number){
 		this.number = number;
+		if(this.number === 10) {
+			return this.number = 0
+		};
+		this.numberKeeper();
 		return this.number;
 	},
 
@@ -15,27 +19,20 @@ Bowling.prototype = {
 	},
 
 	setScoreCalculator: function(){
-		if(this.set_pins[0] === 10) {
-			this.setScoreStrike();
-		} else {
-			this.setScore = this.set_pins[0] + this.set_pins[1];
-		};
-		this.resetSetScore();
+		this.setScore = this.set_pins[0] + this.set_pins[1];
+		if(this.setScore === 10) {
+			this.setScore = 0
+			this.resetSetScore();
+		}
 		return this.setScore;
 	},
 
 	setScoreStrike: function() {
-		if(this.setScore) {
-			this.setScore = 10 + this.setScore;
-		} else {
-			this.setScore = undefined
-		};
+		this.setScore = 10 + this.setScore;
 	},
 
 	setScoreSpare: function() {
-
-
-
+		this.setScore = 10 + this.set_pins[0];
 	},
 
 	resetSetScore: function() {

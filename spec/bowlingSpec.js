@@ -18,9 +18,8 @@ describe('BowlingScore', function() {
 	describe('#numberKeeper', function(){
 		it('stores the number of pins knocked in an array ', function(){
 			game.numberOfPins(5);
-			game.numberKeeper();
 			game.numberOfPins(4);
-			expect(game.numberKeeper()).toEqual([5, 4])
+			expect(game.set_pins).toEqual([5, 4])
 		});
 
 	});
@@ -35,10 +34,39 @@ describe('BowlingScore', function() {
 	});
 
 	describe('#setScoreStrike', function() {
-		it('if the first game is a strike, it waits the result of the next set to calculate the total', function(){
-			game.set_pins = [10]
-			expect(game.setScoreCalculator()).toEqual(undefined)
-		});	
+
+		it('adds 10 the next set score', function(){
+			game.numberOfPins(10);
+			game.numberOfPins(5);
+			game.numberOfPins(4);
+			game.setScoreCalculator();
+			game.setScoreStrike();
+			expect(game.setScore).toEqual(19);
+		});
+
+		it('adds the total score to previous score after first set', function() {
+			this.score = [9]
+			game.numberOfPins(10);
+			game.numberOfPins(5);
+			game.numberOfPins(4);
+			game.setScoreCalculator();
+			game.setScoreStrike();
+			expect(game.setScore).toE
+		});
+	});
+
+
+	describe('#setScoreSpare', function() {
+		it('adds 10 to the next set\'s first score' , function() {
+			game.numberOfPins(6);
+			game.numberOfPins(4);
+			game.setScoreCalculator();
+			game.numberOfPins(4);
+			game.setScoreSpare();
+			expect(game.setScore).toEqual(14);
+		});
+
+
 	});
 
 	describe('#resetSetScore', function(){
