@@ -45,13 +45,13 @@ describe('BowlingScore', function() {
 		});
 
 		it('adds the total score to previous score after first set', function() {
-			this.score = [9]
+			game.score = [9, 17];
 			game.numberOfPins(10);
 			game.numberOfPins(5);
 			game.numberOfPins(4);
 			game.setScoreCalculator();
 			game.setScoreStrike();
-			expect(game.setScore).toE
+			expect(game.setScore).toEqual(36)
 		});
 	});
 
@@ -66,7 +66,15 @@ describe('BowlingScore', function() {
 			expect(game.setScore).toEqual(14);
 		});
 
-
+		it('adds the total score to previous score after first set\'s first game', function() {
+			game.score = [9, 17, 25];
+			game.numberOfPins(6);
+			game.numberOfPins(4);
+			game.setScoreCalculator();
+			game.numberOfPins(4);
+			game.setScoreSpare();
+			expect(game.setScore).toEqual(39);
+		});
 	});
 
 	describe('#resetSetScore', function(){
@@ -75,6 +83,14 @@ describe('BowlingScore', function() {
 			game.resetSetScore();
 			expect(game.set_pins).toEqual([]);
 
+		});
+
+	});
+
+	describe('#gameSet', function() {
+		it('keeps count of the set number', function() {
+			game.score = [9, 17, 25, 37, 39];
+			expect(game.gameSet()).toEqual(5);
 		});
 
 	});
